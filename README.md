@@ -80,8 +80,3 @@ pip install pandas numpy matplotlib seaborn lightgbm scikit-learn statsmodels
 
 ---
 
-## 🛡️ License
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-*Created by [Your Name/Team]*
