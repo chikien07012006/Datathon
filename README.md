@@ -1,45 +1,87 @@
-# Datathon - Advanced E-commerce Analytics & Forecasting
+# 📊 E-commerce Analytics & Revenue Forecasting
 
-This repository contains a comprehensive suite of data science tools for e-commerce, ranging from Exploratory Data Analysis (EDA) and RFM Segmentation to advanced Revenue Forecasting using LightGBM.
+[![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
+[![LightGBM](https://img.shields.io/badge/Model-LightGBM-orange.svg)](https://lightgbm.readthedocs.io/)
+[![Scikit-Learn](https://img.shields.io/badge/Library-Scikit--Learn-green.svg)](https://scikit-learn.org/)
 
-## Project Architecture
+A comprehensive end-to-end data science project focused on e-commerce business intelligence. This repository covers everything from deep exploratory analysis and customer segmentation to high-accuracy revenue forecasting using state-of-the-art machine learning techniques.
 
-### 1. Exploratory Data Analysis (`EDA/`)
-Comprehensive notebooks analyzing varied business dimensions:
-- **Revenue Overview**: In-depth analysis of sales performance and trends.
-- **Customer Behavior**: Segmentation and heatmaps of customer purchasing patterns.
-- **Promotion Analysis**: Evaluation of promotion impacts on order volume and margins.
-- **RFM & CLV**: Customer segmentation using RFM, BG/NBD, and Gamma-Gamma models for Life-Time Value prediction.
-- **Uplift Modeling**: Specialized analysis to identify the incremental impact of marketing treatments.
+---
 
-### 2. Time Series Forecasting (`TimeSerie Forecasting/`)
-Robust forecasting pipelines for medium-to-long term revenue prediction:
-- **lightGBM.ipynb**: The core forecasting engine featuring advanced recursive multi-step prediction.
-- **Baseline_Sarima.ipynb**: A statistical benchmark model using SARIMA for validation.
-- **submission.csv**: The final generated forecast for competition submission.
+## 📈 Executive Summary
 
-### 3. Data Management (`data/`)
-- **Raw Data**: Comprehensive datasets including `orders.csv`, `web_traffic.csv`, `inventory.csv`, `reviews.csv`, etc.
-- **Data Ingestion**: `ingest_to_sqlitedb.py` for structured storage and querying.
+The project aims to optimize e-commerce operations by:
+1. **Understanding Growth**: Identifying key drivers of revenue and profit.
+2. **Customer Intelligence**: Segmenting customers to predict Life-Time Value (CLV).
+3. **Optimizing Marketing**: analyzing promotion elasticity and uplift.
+4. **Predicting the Future**: Building a robust forecasting pipeline to manage inventory and expectations.
 
-## Getting Started
+![Historical Revenue and Profit](data/2.1.png)
 
-### Installation
-Python 3.12+ is recommended. Install the required environment:
+---
+
+## 📂 Repository Structure
+
+### 🔍 1. Exploratory Data Analysis (`EDA/`)
+Deep dives into business performance and customer patterns:
+*   `revenue_overview.ipynb`: Sales trends and seasonality analysis.
+*   `Customer_Behavior.ipynb`: Purchase patterns and frequency heatmaps.
+*   `Promotion_Analysis.ipynb`: Impact assessment of marketing campaigns.
+*   `RFM_Segmentation_...ipynb`: Advanced clustering (BG/NBD & Gamma-Gamma).
+*   `uplift_modeling.ipynb`: Measuring incremental impact of interventions.
+
+### 🔮 2. Time Series Forecasting (`TimeSerie Forecasting/`)
+Multi-step recursive forecasting for revenue planning:
+*   `competition_forecast_pipeline.ipynb`: **[Main]** Integrated ARIMA + LightGBM pipeline.
+*   `lightGBM.ipynb`: Experimental LightGBM implementation with custom feature engineering.
+*   `Baseline_Sarima.ipynb`: Traditional statistical benchmark.
+
+### 💾 3. Data & Utilities (`data/`)
+*   `data/`: Cleaned CSV datasets for all business entities.
+*   `ingest_to_sqlitedb.py`: Automated ETL to a structured database.
+
+---
+
+## 🚀 Model Performance & Insights
+
+Our LightGBM model is highly optimized, focusing on key business drivers like COGS and previous lags.
+
+<p align="center">
+  <img src="data/feature_importance.png" width="45%" />
+  <img src="data/shap_plot.png" width="45%" />
+</p>
+
+*   **Key Driver**: `COGS` and `lag_1` (yesterday's revenue) are the strongest predictors.
+*   **Methodology**: Recursive forecasting with daily dynamic feature updates (40+ features per step).
+*   **External Factors**: Integrated ARIMA models to forecast future `sessions` and `page_views`.
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Installation
+Clone the repository and install the dependencies:
 
 ```bash
-pip install pandas numpy matplotlib seaborn lightgbm scikit-learn statsmodels nbformat
+git clone https://github.com/your-repo/datathon.git
+cd datathon
+pip install -r requirements.txt
+# If no requirements.txt, use:
+pip install pandas numpy matplotlib seaborn lightgbm scikit-learn statsmodels
 ```
 
-### Reproducing Results
-1. **Analyze**: Start with `EDA/revenue_overview.ipynb` to understand the domain.
-2. **Segment**: Use `EDA/RFM_Segmentation_...ipynb` to generate `rfm_clv.csv`.
-3. **Forecast**: 
-   - Open `TimeSerie Forecasting/lightGBM.ipynb`.
-   - The pipeline performs automated feature engineering (lags, growth rates, rolling statistics) and ARIMA-based external feature forecasting.
-   - Run the recursive loop to generate `submission.csv`.
+### 2. Reproduction
+1.  **Initialize**: Run `data/ingest_to_sqlitedb.py` to prepare the data layer.
+2.  **Explore**: Inspect the `EDA/` notebooks for insights into customer segments.
+3.  **Predict**: Execute `TimeSerie Forecasting/competition_forecast_pipeline.ipynb`.
+    *   The model will auto-train on historical data.
+    *   It executes a 500+ step recursive loop.
+    *   Results are exported to `submission.csv`.
 
-## Core Features
-- **Dynamic Feature Updates**: The recursive loop recomputes 40+ features per step to ensure maximum accuracy over a 500+ day horizon.
-- **External Feature Integration**: Automated ARIMA/Regression models for sessions and traffic features.
-- **Target Transformation**: Variance stabilization using Log1P transformations.
+---
+
+## 🛡️ License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+*Created by [Your Name/Team]*
